@@ -1,7 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.qiyuely.remex.dawn</groupId>
   <artifactId>remex-dawn-parent</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <modules>
+    <module>remex-dawn-api</module>
+    <module>remex-dawn-server</module>
+    <module>remex-dawn-framework</module>
+    <module>remex-dawn-common</module>
+  </modules>
+  
+  <properties>
+  	<remex.dawn.version>0.0.1-SNAPSHOT</remex.dawn.version>
+  	<remex.version>0.0.1-SNAPSHOT</remex.version>
+  </properties>
+  
+  <parent>
+  	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-parent</artifactId>
+	<version>1.5.7.RELEASE</version>
+  </parent>
+  
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+  			<groupId>com.qiyuely.remex.dawn</groupId>
+  			<artifactId>remex-dawn-common</artifactId>
+  			<version>${remex.dawn.version}</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>com.qiyuely.remex.dawn</groupId>
+  			<artifactId>remex-dawn-framework</artifactId>
+  			<version>${remex.dawn.version}</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>com.qiyuely.remex.dawn</groupId>
+  			<artifactId>remex-dawn-api</artifactId>
+  			<version>${remex.dawn.version}</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>com.qiyuely.remex.dawn</groupId>
+  			<artifactId>remex-dawn-server</artifactId>
+  			<version>${remex.dawn.version}</version>
+  		</dependency>
+  		
+  		<dependency>
+  			<groupId>com.qiyuely.remex</groupId>
+  			<artifactId>remex-core</artifactId>
+  			<version>${remex.version}</version>
+  		</dependency>
+  	</dependencies>
+  </dependencyManagement>
 </project>
