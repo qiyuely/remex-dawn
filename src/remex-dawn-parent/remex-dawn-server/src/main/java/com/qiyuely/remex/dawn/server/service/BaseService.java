@@ -1,10 +1,11 @@
 package com.qiyuely.remex.dawn.server.service;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Set;
 
-import com.qiyuely.remex.dawn.api.rsp.Result;
-import com.qiyuely.remex.exception.RemexException;
+import com.qiyuely.remex.dawn.common.structure.rsp.BaseResult;
+import com.qiyuely.remex.dawn.common.exception.RemexDawnException;
+import com.qiyuely.remex.utils.BeanUtils;
 
 /**
  * 基础service
@@ -15,30 +16,15 @@ import com.qiyuely.remex.exception.RemexException;
  */
 public class BaseService {
 	
-//	/**
-//	 * 结果集Class
-//	 */
-//	protected Class<R> resultClass;
-//	
-//	@SuppressWarnings("unchecked")
-//	public BaseService() {
-//		//生成各泛型的class
-//		Type genType = getClass().getGenericSuperclass();   
-//		Type[] params = ((ParameterizedType) genType).getActualTypeArguments(); 
-//		resultClass = (Class<R>) params[0];
-//	}
-
-//	/**
-//	 * 创建默认成功的结果集
-//	 * @param data
-//	 * @return
-//	 */
-//	protected R packResult() {
-//		return packResult(null);
-//	}
+	/** service配置项 */
+	protected ServiceInitOptions options = new ServiceInitOptions() {};
 	
-	protected <T, R extends Result<T>> Class<R> createResult() {
-		return (Class<R>) Result.class;
+	/**
+	 * 初始化service配置项
+	 * @param options
+	 */
+	protected void init(ServiceInitOptions options) {
+		this.options = options;
 	}
 	
 	/**
@@ -46,15 +32,56 @@ public class BaseService {
 	 * @param data
 	 * @return
 	 */
-	protected <T, R extends Result<T>> R packResult(T data) {
+	protected <T, R extends BaseResult<T>> R packResult() {
+		return packResult(null);
+	}
+	
+	/**
+	 * 创建默认成功的结果集
+	 * @param data
+	 * @return
+	 */
+	protected <T, R extends BaseResult<T>> R packResult(T data) {
 		try {
-			R result = createResult();
+			Class<R> resultClass = options.getResultClass();
+			R result = resultClass.newInstance();
 			
 			result.setData(data);
 			
 			return result;
 		} catch (Exception e) {
-			throw new RemexException();
+			throw new RemexDawnException("Service pack result error!", e);
 		}
+	}
+	
+	/**
+	 * 将类转换为另一个类
+	 * @param orig 源对象
+	 * @param destClass 目标对象Class
+	 * @return
+	 */
+	public <T> T convertBean(Object orig, Class<T> destClass) {
+		T dest = BeanUtils.convertBean(orig, destClass);
+		return dest;
+	}
+	
+	/**
+	 * 将类的List转换为另一个类的List
+	 * @param origList 源对象List
+	 * @param destClass 目标对象Class
+	 */
+	public <T> List<T> convertBeanList(List<?> origList, Class<T> destClass) {
+		List<T> destList = BeanUtils.convertBeanList(origList, destClass);
+		return destList;
+	}
+	
+	/**
+	 * 将类的Set转换为另一个类的Set
+	 * @param origSet 源对象Set
+	 * @param destClass 目标对象Class
+	 */
+	public static <T> Set<T> convertBeanSet(Set<?> origSet, Class<T> destClass) {
+		Set<T> destSet = BeanUtils.convertBeanSet(origSet, destClass);
+		return destSet;
 	}
 }

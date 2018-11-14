@@ -16,5 +16,9 @@
 		<groupId>com.qiyuely.remex.dawn</groupId>
 		<artifactId>remex-dawn-common</artifactId>
 	</dependency>
+	<dependency>
+	    <groupId>javax.validation</groupId>
+	    <artifactId>validation-api</artifactId>
+	</dependency>
   </dependencies>
 </project>

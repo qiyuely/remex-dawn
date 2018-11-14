@@ -7,14 +7,19 @@
     <artifactId>remex-dawn-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>remex-dawn-server</artifactId>
+  <artifactId>remex-dawn-hvalidator</artifactId>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
-	<dependency>
-		<groupId>com.qiyuely.remex.dawn</groupId>
-		<artifactId>remex-dawn-framework</artifactId>
+  	<dependency>
+  		<groupId>com.qiyuely.remex.dawn</groupId>
+  		<artifactId>remex-dawn-common</artifactId>
+  	</dependency>
+  	
+  	<dependency>
+		<groupId>com.qiyuely.remex</groupId>
+		<artifactId>remex-hvalidator</artifactId>
 	</dependency>
   </dependencies>
 </project>
