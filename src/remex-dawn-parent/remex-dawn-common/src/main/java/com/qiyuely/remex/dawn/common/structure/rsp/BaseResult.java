@@ -2,8 +2,11 @@ package com.qiyuely.remex.dawn.common.structure.rsp;
 
 import java.io.Serializable;
 
+import com.qiyuely.remex.dawn.common.exception.RemexDawnException;
 import com.qiyuely.remex.dawn.common.msg.IMsgEnum;
 import com.qiyuely.remex.dawn.common.msg.MsgEnumContext;
+import com.qiyuely.remex.dawn.common.sys.SysOptions;
+import com.qiyuely.remex.utils.BeanUtils;
 import com.qiyuely.remex.utils.ValidateUtils;
 
 /**
@@ -108,6 +111,44 @@ public class BaseResult<T> implements Serializable {
 	}
 	
 	/**
+	 * 以异常信息来创建结果集
+	 * @param exception
+	 * @return
+	 */
+	public static <R extends BaseResult<?>> R createResult(RemexDawnException exception) {
+		return createResult(exception.getMsgEnum(), exception.getMsgArgs());
+	}
+	
+	/**
+	 * 创建结果集
+	 * @param msgEnum
+	 * @param msgArgs
+	 * @return
+	 */
+	public static <R extends BaseResult<?>> R createResult(IMsgEnum msgEnum, String...msgArgs) {
+		Class<R> resultClass = SysOptions.getResultClass();
+		R result = BeanUtils.newInstance(resultClass);
+		result.fillMsgEnum(msgEnum, msgArgs);
+		return result;
+	}
+	
+	/**
+	 * 是否操作成功
+	 * @return
+	 */
+	public boolean assertSuccess() {
+		return MsgEnumContext.getDefaultSuccessMsgEnum().getCode().equals(code);
+	}
+	
+	/**
+	 * 是否操作失败
+	 * @return
+	 */
+	public boolean assertFailed() {
+		return !assertSuccess();
+	}
+	
+	/**
 	 * 替换消息的占位符
 	 * @param msg
 	 * @param msgArgs
@@ -116,11 +157,31 @@ public class BaseResult<T> implements Serializable {
 	public String resolvePlaceholders(String msg, String...msgArgs) {
 		if (ValidateUtils.isNotEmpty(msgArgs)) {
 			for (String msgArg : msgArgs) {
-				msg.replaceFirst("\\{\\}", msgArg);
+				msg = msg.replaceFirst("\\{\\}", msgArg);
 			}
 		}
 		
 		return msg;
+	}
+	
+	/**
+	 * 获取结果数据
+	 * @return
+	 */
+	public T getData() {
+		return data;
+	}
+	
+	/**
+	 * 带业务性质的获取结果数据，如果操作结果失败，则会抛出异常
+	 * @see com.qiyuely.remex.dawn.common.exception.RemexDawnException
+	 * @return
+	 */
+	public T dataService() {
+		if (assertFailed()) {
+			throw new RemexDawnException(msgEnum, msgArgs);
+		}
+		return data;
 	}
 	
 
@@ -138,10 +199,6 @@ public class BaseResult<T> implements Serializable {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
-	}
-
-	public T getData() {
-		return data;
 	}
 
 	public void setData(T data) {

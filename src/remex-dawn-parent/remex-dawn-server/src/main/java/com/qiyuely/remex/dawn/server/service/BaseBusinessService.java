@@ -1,11 +1,19 @@
 package com.qiyuely.remex.dawn.server.service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.qiyuely.remex.dawn.common.structure.rsp.BaseResult;
+import com.qiyuely.remex.dawn.common.sys.SysOptions;
 import com.qiyuely.remex.dawn.common.exception.RemexDawnException;
 import com.qiyuely.remex.utils.BeanUtils;
+import com.qiyuely.remex.utils.DateUtils;
+import com.qiyuely.remex.utils.IdUtils;
 
 /**
  * 基础service
@@ -14,17 +22,32 @@ import com.qiyuely.remex.utils.BeanUtils;
  *
  * @param <R> 结果集
  */
-public class BaseService {
-	
-	/** service配置项 */
-	protected ServiceInitOptions options = new ServiceInitOptions() {};
+public class BaseBusinessService {
+	/** 日志记录器 */
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 	
 	/**
-	 * 初始化service配置项
-	 * @param options
+	 * 创建主键编号
+	 * @return
 	 */
-	protected void init(ServiceInitOptions options) {
-		this.options = options;
+	protected String createId() {
+		return IdUtils.createId();
+	}
+	
+	/**
+	 * 取得当前时间
+	 * @return
+	 */
+	protected Timestamp getCurTimestamp() {
+		return DateUtils.getCurTimestamp();
+	}
+	
+	/**
+	 * 取得当前时间
+	 * @return
+	 */
+	protected Date getCurDate() {
+		return DateUtils.getCurDate();
 	}
 	
 	/**
@@ -43,7 +66,7 @@ public class BaseService {
 	 */
 	protected <T, R extends BaseResult<T>> R packResult(T data) {
 		try {
-			Class<R> resultClass = options.getResultClass();
+			Class<R> resultClass = SysOptions.getResultClass();
 			R result = resultClass.newInstance();
 			
 			result.setData(data);
@@ -60,7 +83,7 @@ public class BaseService {
 	 * @param destClass 目标对象Class
 	 * @return
 	 */
-	public <T> T convertBean(Object orig, Class<T> destClass) {
+	protected <T> T convertBean(Object orig, Class<T> destClass) {
 		T dest = BeanUtils.convertBean(orig, destClass);
 		return dest;
 	}
@@ -70,7 +93,7 @@ public class BaseService {
 	 * @param origList 源对象List
 	 * @param destClass 目标对象Class
 	 */
-	public <T> List<T> convertBeanList(List<?> origList, Class<T> destClass) {
+	protected <T> List<T> convertBeanList(List<?> origList, Class<T> destClass) {
 		List<T> destList = BeanUtils.convertBeanList(origList, destClass);
 		return destList;
 	}
@@ -80,7 +103,7 @@ public class BaseService {
 	 * @param origSet 源对象Set
 	 * @param destClass 目标对象Class
 	 */
-	public static <T> Set<T> convertBeanSet(Set<?> origSet, Class<T> destClass) {
+	protected static <T> Set<T> convertBeanSet(Set<?> origSet, Class<T> destClass) {
 		Set<T> destSet = BeanUtils.convertBeanSet(origSet, destClass);
 		return destSet;
 	}
