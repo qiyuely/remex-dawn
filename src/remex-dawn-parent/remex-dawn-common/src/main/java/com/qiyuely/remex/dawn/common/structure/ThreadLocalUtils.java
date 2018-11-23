@@ -1,21 +1,21 @@
-package com.qiyuely.remex.dawn.common.structure.req;
+package com.qiyuely.remex.dawn.common.structure;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 请求参数的当前线程变量池
+ * 当前线程变量池
  * 
  * @author Qiaoxin.Hong
  *
  */
-public class RequestThreadLocal {
+public class ThreadLocalUtils {
 	
-	/** 请求参数的当前线程变量池 */
+	/** 当前线程变量池 */
 	protected final static ThreadLocal<Map<String, Object>> localMap = new ThreadLocal<>();
 	
 	/**
-	 * 根据key取得当前线程变量池的请求参数
+	 * 根据key取得当前线程变量池的值
 	 * @param key
 	 * @return
 	 */
@@ -31,7 +31,7 @@ public class RequestThreadLocal {
 	}
 	
 	/**
-	 * 往当前线程变量池设置请求参数
+	 * 往当前线程变量池设置值
 	 * @param key
 	 * @param val
 	 */

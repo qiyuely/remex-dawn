@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.qiyuely.remex.dawn.common.msg.MsgValidatorEnum;
+import com.qiyuely.remex.dawn.common.structure.ThreadLocalUtils;
 
 /**
  * 请求头
@@ -34,8 +35,8 @@ public class BaseRequestHead implements Serializable {
 	private String globalMid;
 	
 	public BaseRequestHead() {
-		this.globalRid = RequestThreadLocal.get("globalRid");
-		this.globalMid = RequestThreadLocal.get("globalMid");
+		this.globalRid = ThreadLocalUtils.get("globalRid");
+		this.globalMid = ThreadLocalUtils.get("globalMid");
 	}
 
 	public String getGlobalRid() {
@@ -44,12 +45,12 @@ public class BaseRequestHead implements Serializable {
 
 	public void setGlobalRid(String globalRid) {
 		this.globalRid = globalRid;
-		RequestThreadLocal.set("globalRid", globalRid);
+		ThreadLocalUtils.set("globalRid", globalRid);
 	}
 
 	public void setGlobalMid(String globalMid) {
 		this.globalMid = globalMid;
-		RequestThreadLocal.set("globalMid", globalMid);
+		ThreadLocalUtils.set("globalMid", globalMid);
 	}
 	
 	public String getGlobalMid() {
