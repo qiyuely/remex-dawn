@@ -2,7 +2,6 @@ package com.qiyuely.remex.dawn.common.structure.req;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.qiyuely.remex.dawn.common.msg.MsgValidatorEnum;
 import com.qiyuely.remex.dawn.common.structure.ThreadLocalUtils;
 
@@ -21,18 +20,17 @@ public class BaseRequestHead implements Serializable {
 	/** 验证消息key - 验证失败 */
 	protected final static String VALIDATOR_ERROR = MsgValidatorEnum.VALIDATOR_ERROR_CODE;
 	
-
-	/**
-	 * 请求的id，一个请求只生成一次
-	 */
-	@JsonIgnore
-	private String globalRid;
+	/** 页码 */
+	protected int pageNum;
 	
-	/**
-	 * 当前方法的id，一个方法就重新生成一次
-	 */
-	@JsonIgnore
-	private String globalMid;
+	/** 每页数量 */
+	protected int pageSize;
+
+	/** 请求的id，一个请求只生成一次 */
+	protected String globalRid;
+	
+	/** 当前方法的id，一个方法就重新生成一次 */
+	protected String globalMid;
 	
 	public BaseRequestHead() {
 		this.globalRid = ThreadLocalUtils.get("globalRid");
@@ -59,5 +57,21 @@ public class BaseRequestHead implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
 	}
 }

@@ -6,7 +6,6 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -21,10 +20,10 @@ import com.github.pagehelper.PageHelper;
  * @author Qiaoxin.Hong
  *
  */
-@MapperScan("com.qyly.coms.*.dao")
+
 @ConditionalOnBean(DataSource.class)
 @Configuration
-public class MybatisConfig {
+public class BaseMybatisConfig {
 
 	@Autowired
 	private DataSource dataSource;

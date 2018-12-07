@@ -30,6 +30,18 @@ public class BaseResult<T> implements Serializable {
 	/** 消息占位符所对应的参数列表 */
 	protected String[] msgArgs;
 	
+	/** 页码 */
+	protected int pageNum;
+	
+	/** 每页数量 */
+	protected int pageSize;
+	
+	/** 总数量 */
+	protected int total;
+    
+    /** 总页数 */
+	protected int pages;
+	
 	/** 结果数据 */
 	protected T data;
 	
@@ -223,5 +235,37 @@ public class BaseResult<T> implements Serializable {
 	
 	public String[] getMsgArgs() {
 		return msgArgs;
+	}
+
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+	public int getPages() {
+		return pages;
+	}
+
+	public void setPages(int pages) {
+		this.pages = pages;
 	}
 }

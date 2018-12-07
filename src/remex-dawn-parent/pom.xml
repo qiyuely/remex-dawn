@@ -63,6 +63,11 @@
   			<artifactId>remex-hvalidator</artifactId>
   			<version>${remex.version}</version>
   		</dependency>
+  		<dependency>
+  			<groupId>com.qiyuely.remex</groupId>
+  			<artifactId>remex-dict</artifactId>
+  			<version>${remex.version}</version>
+  		</dependency>
   		
   		<dependency>
 			<groupId>io.springfox</groupId>

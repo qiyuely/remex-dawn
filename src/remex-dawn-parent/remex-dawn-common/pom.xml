@@ -17,6 +17,10 @@
 		<artifactId>remex-core</artifactId>
 	</dependency>
 	<dependency>
+		<groupId>com.qiyuely.remex</groupId>
+		<artifactId>remex-dict</artifactId>
+	</dependency>
+	<dependency>
 		<groupId>io.springfox</groupId>
 		<artifactId>springfox-swagger2</artifactId>
 	</dependency>
