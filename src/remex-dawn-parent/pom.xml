@@ -11,6 +11,7 @@
     <module>remex-dawn-common</module>
     <module>remex-dawn-hvalidator</module>
     <module>remex-dawn-api</module>
+    <module>remex-dawn-jasperreport</module>
   </modules>
   
   <parent>
@@ -68,6 +69,12 @@
   			<artifactId>remex-dict</artifactId>
   			<version>${remex.version}</version>
   		</dependency>
+  		<dependency>
+  			<groupId>com.qiyuely.remex</groupId>
+  			<artifactId>remex-jasperreport</artifactId>
+  			<version>${remex.version}</version>
+  		</dependency>
+  		
   		
   		<dependency>
 			<groupId>io.springfox</groupId>
